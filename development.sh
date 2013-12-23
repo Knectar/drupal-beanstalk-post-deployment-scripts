@@ -1,8 +1,7 @@
 #!/bin/bash
+# how to run development.sh %COMMENT% %REVISION% %USER_NAME%
+COMMENT=$1
 
-COMMENT = $1
-
-echo comment: $COMMENT;
 if [[ $COMMENT =~ "-updb-" ]]; then
   echo "Clearing cache"
   drush -y updb
@@ -18,10 +17,17 @@ if [[ $COMMENT =~ "-bigups-" ]]; then
   drush cc all
 fi
 
-if [[ $COMMENT =~ "-cc-" ]]; then
+if [[ $COMMENT =~ "-cc_all-" ]]; then
   drush cc all
 fi
 
+if [[ $COMMENT =~ "-cc_cssjs-" ]]; then
+  drush cc ccs-js
+fi
+
+if [[ $COMMENT =~ "-cc_blocks-" ]]; then
+  drush cc block
+fi
 # making local log
-DATE=date
-echo "deployed %REVISION% on $DATE, by %USER_NAME%" >>  ~/.beanstalk.log
+DATE=$(date)
+echo "deployed $2 on $DATE, by $3" >>  ~/.beanstalk.log
